@@ -10,6 +10,7 @@ exports.createNewUser = catchAsync(async (req, res, next) => {
   });
 });
 
+// TODO change the status on the client
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.find();
   res.status(200).json({
@@ -31,6 +32,5 @@ exports.validateData = (req, res, next) => {
   if (error) {
     return res.status(404).send(error.details.map((e) => e.message));
   }
-  console.log(req.body);
   next();
 };
