@@ -1,37 +1,24 @@
 const Joi = require("@hapi/joi");
 const User = require("../models/userModel");
+const catchAsync = require("../utils/catchAsync");
 
-exports.createNewUser = async (req, res) => {
-  try {
-    const newUser = await User.create(req.body);
-    res.status(200).json({
-      status: "Success",
-      user: newUser,
-    });
-  } catch ({ errmsg }) {
-    res.status(400).json({
-      status: "Failure",
-      errmsg,
-    });
-  }
-};
+exports.createNewUser = catchAsync(async (req, res, next) => {
+  const newUser = await User.create(req.body);
+  res.status(200).json({
+    status: "Success",
+    user: newUser,
+  });
+});
 
-exports.getAllUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json({
-      status: "Success",
-      users,
-    });
-  } catch ({ errmsg }) {
-    res.status(4000).json({
-      status: "Failure",
-      errmsg,
-    });
-  }
-};
+exports.getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).json({
+    status: "Success",
+    users,
+  });
+});
 
- // TODO move the validation to mongoose
+// TODO move the validation to mongoose
 exports.validateData = (req, res, next) => {
   const schema = Joi.object({
     nickname: Joi.string().max(11).required(),
