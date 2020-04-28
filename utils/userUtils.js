@@ -10,5 +10,6 @@ module.exports = (users) => {
 const setStatusByMinutesDiff = (create_time) => {
   const diff = create_time - Date.now();
   const resultInMinutes = Math.round(diff / 60000);
+  console.log(resultInMinutes);
   return resultInMinutes >= -15 ? "Online" : "Offline";
 };
