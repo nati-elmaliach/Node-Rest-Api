@@ -1,5 +1,6 @@
 // This is not very efficent, but what are th criteria for usr "offline"?
 module.exports = (users) => {
+  console.log(Date.now());
   array = users.map(({ create_time, _id, nickname, username }) => {
     status = setStatusByMinutesDiff(create_time);
     return { create_time, _id, nickname, username, status };

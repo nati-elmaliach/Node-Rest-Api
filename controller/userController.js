@@ -4,7 +4,7 @@ const catchAsync = require("../utils/catchAsync");
 const setStatusValue = require("../utils/userUtils");
 
 exports.createNewUser = catchAsync(async (req, res, next) => {
-  const newUser = await User.create(req.body);
+  const newUser = await User.create({ ...req.body, create_time: Date.now() });
   res.status(200).json({
     status: "Success",
     user: newUser,
