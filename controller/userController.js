@@ -1,6 +1,7 @@
 const Joi = require("@hapi/joi");
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
+const setStatusValue = require("../utils/userUtils");
 
 exports.createNewUser = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
@@ -12,7 +13,8 @@ exports.createNewUser = catchAsync(async (req, res, next) => {
 
 // TODO change the status on the client
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
+  let users = await User.find().select("-password"); //  exclude user password
+  users = setStatusValue(users);
   res.status(200).json({
     status: "Success",
     users,

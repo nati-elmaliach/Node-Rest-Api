@@ -16,7 +16,6 @@ app.use(helmet());
 app.use(express.json());
 app.use(compression());
 
-
 // Data sanitization against NoSql query injection
 app.use(mongoSanitize());
 
@@ -33,8 +32,7 @@ app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 400));
 });
 
-app.use(globalErrorHandler);
-
 // Error middleware
+app.use(globalErrorHandler);
 
 module.exports = app;

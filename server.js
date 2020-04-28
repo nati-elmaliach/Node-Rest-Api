@@ -1,6 +1,7 @@
 const moongose = require("mongoose");
 const dotenv = require("dotenv");
 
+// Safty-net
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION , Shutting down...");
   console.log(err.name, err.message);

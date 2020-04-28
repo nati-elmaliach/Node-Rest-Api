@@ -43,6 +43,11 @@ const handleValidationErrorDB = (err) => {
   return new AppError(message, 400);
 };
 
+const handleRouteError = (err) => {
+  const errmsg = err.message;
+  return new AppError(errmsg, 404);
+};
+
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
@@ -52,11 +57,14 @@ module.exports = (err, req, res, next) => {
   } else if (process.env.NODE_ENV === "production") {
     let error = { ...err };
 
-    // Duplicate username
-    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
-
-    if (error.name === "ValidationError")
+    // Duplicate field error
+    if (error.code === 11000) {
+      error = handleDuplicateFieldsDB(error);
+    } else if (error.name === "ValidationError") {
       error = handleValidationErrorDB(error);
+    } else {
+      error = handleRouteError(err);
+    }
 
     sendProdError(error, res);
   }
