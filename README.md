@@ -1,5 +1,3 @@
-# Node Rest Api
-
 # Description:
  - Backend - nodejs(express)
  - Database - MongoDB Atlas(cloud)
