@@ -11,28 +11,24 @@ const userRouter = require("./routes/userRoutes");
 
 const app = express();
 
+// Dev Middlewars
+if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
+
 // Middlewars
 app.use(helmet());
 app.use(express.json());
 app.use(compression());
+app.use(mongoSanitize()); // Data sanitization against NoSql query injection
+app.use(xss()); // Data sanitization against XSS
 
-// Data sanitization against NoSql query injection
-app.use(mongoSanitize());
-
-// Data sanitization against XSS
-app.use(xss());
-
-if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
-
-// Routes
+// Implemented Routes
 app.use("/api", userRouter);
 
-// handle unimplemented routes
+// Unimplemented routs
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 400));
 });
 
-// Error middleware
-app.use(globalErrorHandler);
+app.use(globalErrorHandler); // Global error handler
 
 module.exports = app;

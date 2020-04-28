@@ -13,7 +13,7 @@ exports.createNewUser = catchAsync(async (req, res, next) => {
 
 // TODO change the status on the client
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  let users = await User.find().select("-password"); //  exclude user password
+  let users = await User.find().select("-password"); //  exclude user password from response
   users = setStatusValue(users);
   res.status(200).json({
     status: "Success",

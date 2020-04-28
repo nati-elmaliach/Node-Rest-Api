@@ -1,5 +1,6 @@
 const AppError = require("../utils/appError");
 
+// Handle errors on development
 const sendDevError = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -9,6 +10,7 @@ const sendDevError = (err, res) => {
   });
 };
 
+// Handle errors on production
 const sendProdError = (err, res) => {
   // Operational , trusted error: send message to client
   if (err.isOperational) {
@@ -57,7 +59,7 @@ module.exports = (err, req, res, next) => {
   } else if (process.env.NODE_ENV === "production") {
     let error = { ...err };
 
-    // Duplicate field error
+    // Duplicate field error.code === 11000
     if (error.code === 11000) {
       error = handleDuplicateFieldsDB(error);
     } else if (error.name === "ValidationError") {
