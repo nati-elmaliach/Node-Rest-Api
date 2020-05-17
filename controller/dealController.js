@@ -14,5 +14,4 @@ exports.getAllDeals = catchAsync(async (req, res, next) => {
 });
 
 exports.createNewDeal = factory.createOne(Deal);
-
 exports.getCustomer = factory.getOne(Deal);

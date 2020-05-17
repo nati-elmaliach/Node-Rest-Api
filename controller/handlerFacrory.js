@@ -16,11 +16,11 @@ exports.createOne = (Model) =>
 exports.getOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const custumerId = req.params.id;
-    const custumer = await Deal.findOne({ firstName: custumerId });
+    const doc = await Model.findOne({ firstName: custumerId });
     res.status(200).json({
       status: 'success',
       data: {
-        custumer,
+        data: doc,
       },
     });
   });
