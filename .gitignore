@@ -1,9 +1,9 @@
-
 # Logs
 logs
 *.log
 *.env
 
+dev.js
 # Runtime data
 pids
 *.pid

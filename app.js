@@ -26,6 +26,7 @@ app.use(xss()); // Data sanitization against XSS -> convert all html symbols
 // Implemented Routes
 app.use('/api', userRouter);
 app.use('/api/deals', dealsRouter);
+require('./routes/uploadRoutes')(app);
 
 // Unimplemented routs
 app.all('*', (req, res, next) => {
